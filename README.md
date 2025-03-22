@@ -14,6 +14,9 @@ Here's how the project is organized:
 bash
 Copy
 Edit
+
+
+
 📦 ai-powered-os-monitor
  ┣ 📂 backend/          # Manages data processing and API
  ┃ ┣ 📜 app.py         # API server (Flask/FastAPI)
@@ -27,7 +30,13 @@ Edit
  ┣ 📜 Dockerfile        # Deployment setup using Docker
  ┣ 📜 README.md         # Project documentation  
  ┣ 📜 .gitignore        # Excludes unnecessary files from Git  
- ┗ 📜 system_log.txt    # Stores system logs  
+ ┗ 📜 system_log.txt    # Stores system logs 
+
+
+
+
+
+ 
 🛠️ Technologies Used
 Component	Technology Stack
 System Monitoring	C++ (Windows API, Linux /proc/stat)
@@ -179,6 +188,8 @@ def test_system_status(client):
 ➡ Next: Push the final changes to GitHub.
 
 🎯 Final Checklist Before Submission
+
+
 ✔ System monitoring is fully functional 🔄
 ✔ AI detects anomalies and sends alerts 🛑
 ✔ Dashboard provides real-time system insights 📊
