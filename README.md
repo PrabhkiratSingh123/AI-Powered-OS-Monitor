@@ -4,8 +4,11 @@ The AI-Powered OS Monitor is a smart system tracking tool designed to monitor sy
 
 ✨ Key Features:
 ✅ Live system monitoring – Tracks CPU, memory, and disk usage in real time.
+
 ✅ AI-powered anomaly detection – Uses machine learning to predict performance issues.
+
 ✅ Interactive dashboard – Displays system health with alerts and insights.
+
 ✅ API support – Allows easy data retrieval and integration with other tools.
 
 📂 Project Structure
@@ -83,7 +86,9 @@ Frontend Dashboard	React.js / Tkinter
 Data Visualization	Chart.js / Plotly
 Deployment	Docker, Gunicorn, Nginx
 🚀 Project Roadmap & Next Steps
+
 ✅ Step 1: Train AI for Anomaly Detection
+
 Goal: Improve accuracy in detecting unusual system behavior.
 
 ✔ Collect system performance data for training.
@@ -115,7 +120,9 @@ print("Anomalous CPU Usage:", anomalies)
 Goal: Create a backend API to fetch real-time system performance data.
 
 ✔ Develop an API using Flask or FastAPI.
+
 ✔ Set up endpoints for retrieving system health metrics.
+
 ✔ Provide data for visualization and alerts.
 
 📌 Sample Code – Flask API for System Monitoring
@@ -141,6 +148,7 @@ if __name__ == '__main__':
 ➡ Next: Deploy this API and integrate it with the front-end dashboard.
 
 ✅ Step 3: Create an Interactive Dashboard
+
 Goal: Build a user-friendly dashboard to display system health.
 
 ✔ Develop a React.js (Web) or Tkinter (Desktop) UI.
@@ -149,7 +157,9 @@ Goal: Build a user-friendly dashboard to display system health.
 
 📌 Example Features:
 🔹 Live CPU & Memory Graphs 📊
+
 🔹 Alerts for High Usage or Anomalies ⚠️
+
 🔹 AI-Based Suggestions for Optimization 💡
 
 📌 Sample Code – React.js Dashboard Fetching Data from API
