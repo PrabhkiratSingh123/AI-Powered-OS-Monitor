@@ -17,6 +17,27 @@ Edit
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 📦 ai-powered-os-monitor
  ┣ 📂 backend/          # Manages data processing and API
  ┃ ┣ 📜 app.py         # API server (Flask/FastAPI)
@@ -188,6 +209,14 @@ def test_system_status(client):
 ➡ Next: Push the final changes to GitHub.
 
 🎯 Final Checklist Before Submission
+
+
+
+
+
+
+
+
 
 
 ✔ System monitoring is fully functional 🔄
