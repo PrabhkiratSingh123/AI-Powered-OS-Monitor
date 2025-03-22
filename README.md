@@ -40,17 +40,33 @@ Edit
 
 📦 ai-powered-os-monitor
  ┣ 📂 backend/          # Manages data processing and API
+ 
  ┃ ┣ 📜 app.py         # API server (Flask/FastAPI)
+ 
  ┃ ┣ 📜 ai_model.py    # AI model for anomaly detection
+ 
  ┃ ┣ 📜 system_monitor.py # Gathers system performance data
+ 
  ┃ ┗ 📜 requirements.txt # Lists dependencies
+ 
  ┣ 📂 frontend/         # Handles user interface
+ 
  ┃ ┣ 📜 dashboard.js    # Dashboard logic (React.js or Tkinter)
+ 
  ┃ ┣ 📜 index.html      # Web-based interface
+ 
  ┃ ┗ 📜 styles.css      # Styling and layout
+ 
  ┣ 📜 Dockerfile        # Deployment setup using Docker
+ 
+ 
+ 
+ 
+ 
  ┣ 📜 README.md         # Project documentation  
+ 
  ┣ 📜 .gitignore        # Excludes unnecessary files from Git  
+ 
  ┗ 📜 system_log.txt    # Stores system logs 
 
 
@@ -220,8 +236,13 @@ def test_system_status(client):
 
 
 ✔ System monitoring is fully functional 🔄
+
 ✔ AI detects anomalies and sends alerts 🛑
+
 ✔ Dashboard provides real-time system insights 📊
+
 ✔ API serves system data efficiently 🔗
+
 ✔ Deployment works on local and cloud environments ☁️
+
 ✔ Documentation is clear and user-friendly 📖
