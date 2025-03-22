@@ -127,16 +127,25 @@ Goal: Create a backend API to fetch real-time system performance data.
 ✔ Provide data for visualization and alerts.
 
 📌 Sample Code – Flask API for System Monitoring
+
+
+
 python
+
 Copy
 Edit
+
+
 from flask import Flask, jsonify
+
 import psutil
 
 app = Flask(__name__)
 
 @app.route('/api/system_status', methods=['GET'])
+
 def get_system_status():
+
     status = {
         "cpu_usage": psutil.cpu_percent(),
         "memory_usage": psutil.virtual_memory().percent,
@@ -145,8 +154,10 @@ def get_system_status():
     return jsonify(status)
 
 if __name__ == '__main__':
+
     app.run(debug=True)
 ➡ Next: Deploy this API and integrate it with the front-end dashboard.
+
 
 ✅ Step 3: Create an Interactive Dashboard
 
@@ -165,34 +176,154 @@ Goal: Build a user-friendly dashboard to display system health.
 
 📌 Sample Code – React.js Dashboard Fetching Data from API
 javascript
-Copy
-Edit
-import { useState, useEffect } from 'react';
 
-function SystemMonitor() {
-    const [data, setData] = useState(null);
 
-    useEffect(() => {
-        fetch('/api/system_status')
-            .then(response => response.json())
-            .then(data => setData(data));
-    }, []);
 
-    return (
-        <div>
-            <h2>System Monitor Dashboard</h2>
-            {data ? (
-                <div>
-                    <p>CPU Usage: {data.cpu_usage}%</p>
-                    <p>Memory Usage: {data.memory_usage}%</p>
-                    <p>Disk Usage: {data.disk_usage}%</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live System Monitor</title>
+    <style>
+        /* Basic Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Arial", sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+        }
+
+        /* Main Container */
+        .container {
+            width: 80%;
+            max-width: 600px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Card Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        /* Progress Bar Styling */
+        .progress-container {
+            width: 100%;
+            background: #eee;
+            height: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            line-height: 25px;
+            border-radius: 12px;
+            transition: width 1s ease-in-out;
+        }
+
+        .cpu .progress-bar { background: #ff6b6b; }
+        .memory .progress-bar { background: #4d91ff; }
+        .disk .progress-bar { background: #28c76f; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🔍 Live System Monitor</h2>
+        <p>Keep track of your system's performance in real-time.</p>
+
+        <div class="grid">
+            <div class="card cpu">
+                <h3>💻 CPU Usage</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" id="cpuBar">0%</div>
                 </div>
-            ) : (
-                <p>Loading data...</p>
-            )}
+            </div>
+
+            <div class="card memory">
+                <h3>🧠 Memory Usage</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" id="memoryBar">0%</div>
+                </div>
+            </div>
+
+            <div class="card disk">
+                <h3>💾 Disk Usage</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" id="diskBar">0%</div>
+                </div>
+            </div>
         </div>
-    );
-}
+    </div>
+
+    <script>
+        // Function to update the system usage dynamically
+        function updateUsage() {
+            const cpuUsage = Math.floor(Math.random() * 100);
+            const memoryUsage = Math.floor(Math.random() * 100);
+            const diskUsage = Math.floor(Math.random() * 100);
+
+            updateBar("cpuBar", cpuUsage);
+            updateBar("memoryBar", memoryUsage);
+            updateBar("diskBar", diskUsage);
+        }
+
+        // Function to smoothly update a progress bar
+        function updateBar(id, value) {
+            const bar = document.getElementById(id);
+            bar.style.width = value + "%";
+            bar.textContent = value + "%";
+        }
+
+        // Update every 3 seconds
+        setInterval(updateUsage, 3000);
+        updateUsage(); // Initial call to set values
+    </script>
+
+</body>
+</html>
+
 
 export default SystemMonitor;
 ➡ Next: Deploy the dashboard locally or on a cloud platform.
