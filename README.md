@@ -1,4 +1,5 @@
 AI-Powered OS Monitor
+
 📌 Project Overview
 The AI-Powered OS Monitor is a smart system tracking tool designed to monitor system performance in real time. With AI-driven anomaly detection, it keeps an eye on CPU usage, memory load, and disk activity, spotting unusual patterns before they cause trouble. The system provides insights and suggestions to help optimize performance, ensuring smooth operation.
 
