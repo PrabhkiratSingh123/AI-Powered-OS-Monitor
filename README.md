@@ -93,8 +93,11 @@ Deployment	Docker, Gunicorn, Nginx
 Goal: Improve accuracy in detecting unusual system behavior.
 
 ✔ Collect system performance data for training.
+
 ✔ Use Isolation Forest, LSTM, or Autoencoder for anomaly detection.
+
 ✔ Implement real-time alerts when anomalies are found.
+
 
 📌 Sample Code – Isolation Forest for CPU Anomaly Detection
 python
@@ -104,20 +107,27 @@ from sklearn.ensemble import IsolationForest
 import numpy as np
 
 # Example CPU usage data (Replace with real system data)
+
 cpu_usage = np.array([20, 22, 21, 19, 85, 23, 20, 22, 95]).reshape(-1, 1)
 
 # Train the model
+
 model = IsolationForest(contamination=0.1)
+
 model.fit(cpu_usage)
 
 # Detect anomalies
+
 predictions = model.predict(cpu_usage)
+
 anomalies = cpu_usage[predictions == -1]
 
 print("Anomalous CPU Usage:", anomalies)
+
 ➡ Next: Integrate this model into the system monitoring tool.
 
 ✅ Step 2: Build the API for Data Retrieval
+
 Goal: Create a backend API to fetch real-time system performance data.
 
 ✔ Develop an API using Flask or FastAPI.
@@ -164,10 +174,14 @@ if __name__ == '__main__':
 Goal: Build a user-friendly dashboard to display system health.
 
 ✔ Develop a React.js (Web) or Tkinter (Desktop) UI.
+
 ✔ Fetch real-time system stats via the API.
+
 ✔ Use Chart.js, Plotly, or Matplotlib for live graphs.
 
+
 📌 Example Features:
+
 🔹 Live CPU & Memory Graphs 📊
 
 🔹 Alerts for High Usage or Anomalies ⚠️
@@ -341,12 +355,17 @@ sh
 Copy
 Edit
 gunicorn --bind 0.0.0.0:5000 app:app
+
 ✅ Step 5: Documentation & Final Touches
+
 Goal: Ensure the project is well-documented and ready for public use.
 
 ✔ Update README.md with setup instructions and screenshots.
+
 ✔ Write API documentation using Swagger or Postman.
+
 ✔ Add unit tests for AI and system monitoring components.
+
 
 📌 Example: Unit Test for API Endpoint (Using pytest)
 python
