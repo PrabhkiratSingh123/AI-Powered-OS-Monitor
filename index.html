@@ -1,144 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live System Monitor</title>
-    <style>
-        /* Basic Styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: "Arial", sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced System Monitor Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #f0f2f5;
+    }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(to right, #f5f7fa, #c3cfe2);
-        }
+    header {
+      background: #2c3e50;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
 
-        /* Main Container */
-        .container {
-            width: 80%;
-            max-width: 600px;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
 
-        h2 {
-            font-size: 26px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            color: #333;
-        }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
 
-        /* Card Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
+    .tab-btn {
+      background: #34495e;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px 5px 0 0;
+      margin-right: 5px;
+    }
 
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
+    .tab-btn.active {
+      background: #1abc9c;
+    }
 
-        .card h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #555;
-        }
+    .tab-content {
+      display: none;
+    }
 
-        /* Progress Bar Styling */
-        .progress-container {
-            width: 100%;
-            background: #eee;
-            height: 25px;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-        }
+    .tab-content.active {
+      display: block;
+    }
 
-        .progress-bar {
-            height: 100%;
-            text-align: center;
-            font-size: 14px;
-            font-weight: bold;
-            color: white;
-            line-height: 25px;
-            border-radius: 12px;
-            transition: width 1s ease-in-out;
-        }
+    .card, .section {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
 
-        .cpu .progress-bar { background: #ff6b6b; }
-        .memory .progress-bar { background: #4d91ff; }
-        .disk .progress-bar { background: #28c76f; }
-    </style>
+    .progress-container {
+      background: #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 24px;
+      margin-bottom: 10px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      transition: width 0.5s ease;
+    }
+
+    .cpu .progress-bar { background-color: #e74c3c; }
+    .memory .progress-bar { background-color: #2980b9; }
+    .disk .progress-bar { background-color: #27ae60; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background: #f7f7f7;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      margin: 4px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-danger {
+      background: #e74c3c;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-top: 10px;
+      font-family: monospace;
+      resize: vertical;
+    }
+
+    /* Search Bar */
+    #searchBar {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    /* Loading Indicator */
+    #loading {
+      text-align: center;
+      display: none;
+      color: #3498db;
+      font-size: 18px;
+    }
+  </style>
 </head>
+
 <body>
 
-    <div class="container">
-        <h2>🔍 Live System Monitor</h2>
-        <p>Keep track of your system's performance in real-time.</p>
+<header>
+  <h1>🧠 OS Mointoring System</h1>
+  <p>Real-Time-Dashboard</p>
+</header>
 
-        <div class="grid">
-            <div class="card cpu">
-                <h3>💻 CPU Usage</h3>
-                <div class="progress-container">
-                    <div class="progress-bar" id="cpuBar">0%</div>
-                </div>
-            </div>
+<div class="container">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(event, 'cpuTab')">CPU</button>
+    <button class="tab-btn" onclick="switchTab(event, 'processTab')">Processes</button>
+    <button class="tab-btn" onclick="switchTab(event, 'terminalTab')">Terminal</button>
+  </div>
 
-            <div class="card memory">
-                <h3>🧠 Memory Usage</h3>
-                <div class="progress-container">
-                    <div class="progress-bar" id="memoryBar">0%</div>
-                </div>
-            </div>
-
-            <div class="card disk">
-                <h3>💾 Disk Usage</h3>
-                <div class="progress-container">
-                    <div class="progress-bar" id="diskBar">0%</div>
-                </div>
-            </div>
-        </div>
+  <!-- CPU Tab -->
+  <div id="cpuTab" class="tab-content active">
+    <div class="card cpu">
+      <h2>CPU Usage</h2>
+      <div class="progress-container">
+        <div class="progress-bar" id="cpuBar">0%</div>
+      </div>
     </div>
 
-    <script>
-        // Function to update the system usage dynamically
-        function updateUsage() {
-            const cpuUsage = Math.floor(Math.random() * 100);
-            const memoryUsage = Math.floor(Math.random() * 100);
-            const diskUsage = Math.floor(Math.random() * 100);
+    <div class="card memory">
+      <h2>Memory Usage</h2>
+      <div class="progress-container">
+        <div class="progress-bar" id="memoryBar">0%</div>
+      </div>
+    </div>
 
-            updateBar("cpuBar", cpuUsage);
-            updateBar("memoryBar", memoryUsage);
-            updateBar("diskBar", diskUsage);
-        }
+    <div class="card disk">
+      <h2>Disk Usage</h2>
+      <div class="progress-container">
+        <div class="progress-bar" id="diskBar">0%</div>
+      </div>
+    </div>
 
-        // Function to smoothly update a progress bar
-        function updateBar(id, value) {
-            const bar = document.getElementById(id);
-            bar.style.width = value + "%";
-            bar.textContent = value + "%";
-        }
+    <div class="section">
+      <h2>System Info</h2>
+      <pre id="systemInfo">Loading...</pre>
+    </div>
+  </div>
 
-        // Update every 3 seconds
-        setInterval(updateUsage, 3000);
-        updateUsage(); // Initial call to set values
-    </script>
+  <!-- Processes Tab -->
+  <div id="processTab" class="tab-content">
+    <div class="section">
+      <h2>Running Processes</h2>
+      <input type="text" id="searchBar" placeholder="Search for processes..." onkeyup="searchProcesses()" />
+
+      <table id="processTable">
+        <thead>
+          <tr>
+            <th>PID</th>
+            <th>Name</th>
+            <th>User</th>
+            <th>CPU%</th>
+            <th>Memory%</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Run New Task</h2>
+      <input type="text" id="newTask" placeholder="Enter command (e.g., notepad)" style="width: 80%;" />
+      <button class="btn" onclick="runNewTask()">Run</button>
+    </div>
+  </div>
+
+  <!-- Terminal Tab -->
+  <div id="terminalTab" class="tab-content">
+    <div class="section">
+      <h2>Terminal Command</h2>
+      <input type="text" id="terminalInput" placeholder="Enter command (e.g., dir, ls, whoami)" style="width: 80%;" />
+      <button class="btn" onclick="runTerminalCommand()">Run Command</button>
+      <textarea readonly id="terminalOutput" placeholder="Output will appear here..."></textarea>
+    </div>
+  </div>
+
+  <div id="loading">Loading...</div>
+</div>
+
+<script>
+  // Switching Tabs
+  function switchTab(event, tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    document.getElementById(tabId).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Update progress bar
+  function updateBar(id, value) {
+    const bar = document.getElementById(id);
+    bar.style.width = value + "%";
+    bar.textContent = value.toFixed(1) + "%";
+  }
+
+  // Show loading state
+  function showLoading() {
+    document.getElementById('loading').style.display = 'block';
+  }
+
+  // Hide loading state
+  function hideLoading() {
+    document.getElementById('loading').style.display = 'none';
+  }
+
+  // Fetch System Status
+  async function fetchSystemData() {
+    showLoading();
+    try {
+      const res = await fetch('/api/system_status');
+      const data = await res.json();
+
+      updateBar("cpuBar", data.cpu_usage);
+      updateBar("memoryBar", data.memory.percent);
+      updateBar("diskBar", data.disk.percent || 0);
+
+      document.getElementById('systemInfo').textContent = `Boot Time: ${new Date(data.boot_time * 1000).toLocaleString()}
+      Total Memory: ${(data.memory.total / (1024 ** 3)).toFixed(2)} GB
+      Used Memory: ${(data.memory.used / (1024 ** 3)).toFixed(2)} GB
+      Free Memory: ${(data.memory.available / (1024 ** 3)).toFixed(2)} GB
+      Network Sent: ${(data.network.bytes_sent / (1024 ** 2)).toFixed(2)} MB
+      Network Received: ${(data.network.bytes_recv / (1024 ** 2)).toFixed(2)} MB
+      Users: ${data.users.map(u => u.name).join(', ') || 'N/A'}`;
+
+    } catch (err) {
+      console.error(err);
+      alert('Failed to fetch system data');
+    } finally {
+      hideLoading();
+    }
+  }
+
+  // Fetch Process List
+  async function fetchProcesses() {
+    showLoading();
+    try {
+      const res = await fetch('/api/processes');
+      const processes = await res.json();
+      const tbody = document.querySelector("#processTable tbody");
+      tbody.innerHTML = "";
+      processes.forEach(p => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${p.pid}</td>
+          <td>${p.name}</td>
+          <td>${p.username || "N/A"}</td>
+          <td>${p.cpu_percent || 0}</td>
+          <td>${p.memory_percent?.toFixed(2) || 0}</td>
+          <td><button class="btn btn-danger" onclick="killProcess(${p.pid})">Kill</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+    } catch (err) {
+      console.error(err);
+      alert('Failed to fetch processes');
+    } finally {
+      hideLoading();
+    }
+  }
+
+  // Kill Process
+  async function killProcess(pid) {
+    const res = await fetch('/api/kill_process', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pid })
+    });
+    const data = await res.json();
+    alert(data.message);
+    fetchProcesses();
+  }
+
+  // Run New Task
+  async function runNewTask() {
+    const cmd = document.getElementById('newTask').value.trim();
+    if (!cmd) return alert("Please enter a command.");
+    const res = await fetch('/api/run_task', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ command: cmd })
+    });
+    const data = await res.json();
+    alert(data.message);
+    document.getElementById('newTask').value = '';
+  }
+
+  // Run Terminal Command
+  async function runTerminalCommand() {
+    const cmd = document.getElementById('terminalInput').value.trim();
+    const output = document.getElementById('terminalOutput');
+    output.value = "Running...";
+    try {
+      const res = await fetch('/api/run_command', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ command: cmd })
+      });
+      const data = await res.json();
+      output.value = data.output;
+    } catch (err) {
+      output.value = "Error running command.";
+    }
+  }
+
+  // Search Processes
+  function searchProcesses() {
+    const query = document.getElementById('searchBar').value.toLowerCase();
+    const rows = document.querySelectorAll("#processTable tbody tr");
+    rows.forEach(row => {
+      const pid = row.cells[0].textContent;
+      const name = row.cells[1].textContent.toLowerCase();
+      const user = row.cells[2].textContent.toLowerCase();
+      if (name.includes(query) || pid.includes(query) || user.includes(query)) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  }
+
+  // Initial fetches
+  fetchSystemData();
+  fetchProcesses();
+</script>
 
 </body>
 </html>
